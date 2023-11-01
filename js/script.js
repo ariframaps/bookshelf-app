@@ -35,8 +35,6 @@ function addBook() {
     document.getElementById("authorInput").value = '';
     document.getElementById("yearInput").value = '';
     document.getElementById("isCompleteCheck").checked = false;
-    authorInput = '';
-    yearInput = '';
     // isCompleted = false;
 }
 
