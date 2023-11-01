@@ -19,13 +19,13 @@
                 <h2>Masukkan Buku Baru</h2>
 
                 <label for="titleInput">Judul</label>
-                <input type="text" id="titleInput">
+                <input type="text" id="titleInput" placeholder="Judul buku">
 
                 <label for="authorInput">Penulis</label>
-                <input type="text" id="authorInput">
+                <input type="text" id="authorInput" placeholder="Nama penulis">
 
                 <label for="yearInput">Tahun</label>
-                <input type="text" id="yearInput">
+                <input type="text" id="yearInput" placeholder="Tahun rilis">
 
                 <label for="isCompleteCheck">Selesai dibaca<input type="checkbox" id="isCompleteCheck"></label>
 
@@ -40,11 +40,28 @@
     <main>
         <form id="search-container">
             <img src="assets/logo-kecil.png" id="logo-kecil">
-            <input type="text" id="searchInput" placeholder="Cari judul buku">
+            <input type="text" id="searchInput" placeholder="Cari buku berdasarkan judul">
             <button type="submit" id="searchSubmit">Cari</button>
         </form>
 
         <div id="bookshelfs-container">
+            <div class="bookshelf">
+                <h2>Belum selesai dibaca</h2>
+                <div class="list-item" id="belumDibaca">
+                </div>
+            </div>
+            <div class="bookshelf">
+                <h2>Selesai dibaca</h2>
+                <div class="list-item" id="selesaiDibaca">
+                    <div class="item">
+                        <h3>Harry Potter ll</h3>
+                        <p>Penulis: J.K. Rowling</p>
+                        <p>Tahun: 2000</p>
+                        <button class="greenButton">Belum dibaca</button>
+                        <button class="redButton">Hapus</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
