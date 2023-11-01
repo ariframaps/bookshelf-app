@@ -19,13 +19,13 @@
                 <h2>Masukkan Buku Baru</h2>
 
                 <label for="titleInput">Judul</label>
-                <input type="text" id="titleInput" placeholder="Judul buku">
+                <input type="text" id="titleInput" placeholder="Judul buku" required>
 
                 <label for="authorInput">Penulis</label>
-                <input type="text" id="authorInput" placeholder="Nama penulis">
+                <input type="text" id="authorInput" placeholder="Nama penulis" required>
 
                 <label for="yearInput">Tahun</label>
-                <input type="text" id="yearInput" placeholder="Tahun rilis">
+                <input type="number" id="yearInput" placeholder="Tahun rilis" required>
 
                 <label for="isCompleteCheck">Selesai dibaca<input type="checkbox" id="isCompleteCheck"></label>
 
@@ -53,13 +53,6 @@
             <div class="bookshelf">
                 <h2>Selesai dibaca</h2>
                 <div class="list-item" id="selesaiDibaca">
-                    <div class="item">
-                        <h3>Harry Potter ll</h3>
-                        <p>Penulis: J.K. Rowling</p>
-                        <p>Tahun: 2000</p>
-                        <button class="greenButton">Belum dibaca</button>
-                        <button class="redButton">Hapus</button>
-                    </div>
                 </div>
             </div>
         </div>

@@ -62,6 +62,10 @@ body {
     border-top-left-radius: 0;
 }
 
+::placeholder {
+    color: rgb(171, 171, 171);
+}
+
 #addBook-form #isCompleteCheck {
     height: fit-content;
     margin-left: 10px;
@@ -143,7 +147,7 @@ main {
 
 
 .bookshelf {
-    border: 1px solid black;
+    border: 2px solid rgb(165, 165, 165);
     border-radius: 10px;
     width: 100%;
     box-sizing: border-box;
@@ -162,6 +166,7 @@ main {
     border-radius: 5px;
     box-sizing: border-box;
     padding: 20px;
+    margin-bottom: 15px;
 }
 
 .item h3 {
@@ -182,10 +187,20 @@ main {
     padding: 8px 14px;
     border-radius: 5px;
     margin-top: 5px;
+    transition-duration: .2s;
+}
+
+.item button:hover {
+    background-color: black;
+}
+
+button {
+    cursor: pointer;
 }
 
 .item .greenButton {
     background-color: #21B56E;
+    margin-right: 10px;
 }
 
 .item .redButton {
