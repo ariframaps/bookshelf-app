@@ -31,10 +31,13 @@ function addBook() {
 
     addContentToStorage(newBook);
     loadContentFromStorage();
-    titleInput.value = '';
-    authorInput.value = '';
-    yearInput.value = '';
-    isCompleted.checked = false;
+    document.getElementById("titleInput").value = '';
+    document.getElementById("authorInput").value = '';
+    document.getElementById("yearInput").value = '';
+    document.getElementById("isCompleteCheck").checked = false;
+    authorInput = '';
+    yearInput = '';
+    // isCompleted = false;
 }
 
 function generateId() {
