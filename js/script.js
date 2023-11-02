@@ -143,16 +143,23 @@ function makeItem(book) {
 }
 
 function deleteItem(bookId) {
-    const bookIndex = findBookIndex(bookId);
+    const customDialog = document.getElementById('custom-dialog');
+    customDialog.style.visibility = 'visible';
 
-    // const customDialog = document.getElementById('custom-dialog');
-    // customDialog.style.visibility = 'visible';
+    const confirmDelete = document.getElementById('confirm-delete');
+    confirmDelete.addEventListener('click', () => {
+        const bookIndex = findBookIndex(bookId);
+        bookList.splice(bookIndex, 1);
+        updateLocalStorage();
+        loadContentFromStorage();
+        customDialog.style.visibility = 'hidden';
+    });
 
+    const cancelDelete = document.getElementById('cancel-delete');
+    cancelDelete.addEventListener('click', () => {
+        customDialog.style.visibility = 'hidden';
+    });
 
-
-    bookList.splice(bookIndex, 1);
-    updateLocalStorage();
-    loadContentFromStorage();
 }
 
 function findBookIndex(bookId) {
