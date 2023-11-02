@@ -12,6 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         addBook();
     });
+
+    const search_form = document.getElementById("search-container");
+    search_form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const searchInput = document.getElementById('searchInput').value;
+        loadContentFromStorage(true, searchInput);
+    });
 });
 
 function addBook() {
@@ -46,31 +53,33 @@ function isStorageExist() {
     return typeof (Storage) !== undefined;
 }
 
-function refreshStorage() {
+function updateLocalStorage() {
     const bookListStringified = JSON.stringify(bookList);
     localStorage.setItem(STORAGE_KEY, bookListStringified);
 }
 
 function addContentToStorage(newBook) {
     bookList.push(newBook);
-
-    refreshStorage();
+    updateLocalStorage();
 }
 
-function loadContentFromStorage() {
+function loadContentFromStorage(isSearching = false, searchInput = '') {
     const belumDibaca = document.getElementById('belumDibaca');
     belumDibaca.innerHTML = '';
     const selesaiDibaca = document.getElementById('selesaiDibaca');
     selesaiDibaca.innerHTML = '';
 
     if (localStorage.getItem(STORAGE_KEY) == null) {
-        console.log(bookList);
         return;
     }
     bookList = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    console.log(bookList);
+    bookListLoaded = bookList;
 
-    for (let book of bookList) {
+    if (isSearching) {
+        bookListLoaded = bookList.filter(book => book.title.includes(searchInput));
+    }
+
+    for (let book of bookListLoaded) {
         const item = makeItem(book);
         if (book.isCompleted) {
             selesaiDibaca.appendChild(item);
@@ -110,7 +119,7 @@ function makeItem(book) {
         undoButton.addEventListener('click', () => {
             const bookItem = findBook(book.id);
             bookItem.isCompleted = false;
-            refreshStorage();
+            updateLocalStorage();
             loadContentFromStorage();
         });
 
@@ -123,7 +132,7 @@ function makeItem(book) {
         doneButton.addEventListener('click', () => {
             const bookItem = findBook(book.id);
             bookItem.isCompleted = true;
-            refreshStorage();
+            updateLocalStorage();
             loadContentFromStorage();
         });
 
@@ -135,8 +144,14 @@ function makeItem(book) {
 
 function deleteItem(bookId) {
     const bookIndex = findBookIndex(bookId);
+
+    // const customDialog = document.getElementById('custom-dialog');
+    // customDialog.style.visibility = 'visible';
+
+
+
     bookList.splice(bookIndex, 1);
-    refreshStorage();
+    updateLocalStorage();
     loadContentFromStorage();
 }
 
@@ -151,13 +166,3 @@ function findBook(bookId) {
         if (book.id == bookId) return book;
     }
 }
-// render localStorage dulu
-// klik submit form
-// buku dibuat terus dimasukkan ke localStorage
-// render localStorage
-
-// const destroy = document.querySelector('.redButton');
-
-// destroy.addEventListener('click', () => {
-//     localStorage.removeItem(STORAGE_KEY);
-// });
