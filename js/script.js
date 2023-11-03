@@ -6,18 +6,30 @@ document.addEventListener("DOMContentLoaded", () => {
         loadContentFromStorage();
     }
 
-    const addBook_form = document.getElementById("addBook-form");
+    const inputs = document.querySelectorAll('input[type="text"]');
+    for (let input of inputs) {
+        const placeholder = input.placeholder;
+        input.addEventListener("focus", () => {
+            input.removeAttribute('placeholder');
+        });
+        input.addEventListener("blur", () => {
+            input.setAttribute('placeholder', placeholder);
+        });
+    }
 
+    const addBook_form = document.getElementById("addBook-form");
     addBook_form.addEventListener("submit", (e) => {
         e.preventDefault();
         addBook();
+        const searchInput = document.getElementById('searchInput').value;
+        loadContentFromStorage(searchInput);
     });
 
     const search_form = document.getElementById("search-container");
     search_form.addEventListener("submit", (e) => {
         e.preventDefault();
         const searchInput = document.getElementById('searchInput').value;
-        loadContentFromStorage(true, searchInput);
+        loadContentFromStorage(searchInput);
     });
 });
 
@@ -37,12 +49,10 @@ function addBook() {
     }
 
     addContentToStorage(newBook);
-    loadContentFromStorage();
     document.getElementById("titleInput").value = '';
     document.getElementById("authorInput").value = '';
     document.getElementById("yearInput").value = '';
     document.getElementById("isCompleteCheck").checked = false;
-    // isCompleted = false;
 }
 
 function generateId() {
@@ -63,7 +73,7 @@ function addContentToStorage(newBook) {
     updateLocalStorage();
 }
 
-function loadContentFromStorage(isSearching = false, searchInput = '') {
+function loadContentFromStorage(searchInput = '') {
     const belumDibaca = document.getElementById('belumDibaca');
     belumDibaca.innerHTML = '';
     const selesaiDibaca = document.getElementById('selesaiDibaca');
@@ -73,14 +83,10 @@ function loadContentFromStorage(isSearching = false, searchInput = '') {
         return;
     }
     bookList = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    bookListLoaded = bookList;
-
-    if (isSearching) {
-        bookListLoaded = bookList.filter(book => book.title.includes(searchInput));
-    }
+    let bookListLoaded = bookList.filter(book => book.title.includes(searchInput));
 
     for (let book of bookListLoaded) {
-        const item = makeItem(book);
+        const item = makeItem(book, bookListLoaded);
         if (book.isCompleted) {
             selesaiDibaca.appendChild(item);
         } else {
@@ -89,7 +95,7 @@ function loadContentFromStorage(isSearching = false, searchInput = '') {
     }
 }
 
-function makeItem(book) {
+function makeItem(book, bookListLoaded) {
     const judul = document.createElement('h3');
     judul.innerText = book.title;
 
@@ -101,14 +107,14 @@ function makeItem(book) {
 
     const container = document.createElement('div');
     container.classList.add('item');
+    container.setAttribute('id', book.id);
     container.append(judul, penulis, tahun);
 
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'Hapus';
     deleteButton.classList.add('redButton');
     deleteButton.addEventListener('click', () => {
-        deleteItem(book.id);
-        loadContentFromStorage();
+        deleteItem(book.id, bookListLoaded);
     });
 
     if (book.isCompleted) {
@@ -117,10 +123,12 @@ function makeItem(book) {
         undoButton.classList.add('greenButton');
 
         undoButton.addEventListener('click', () => {
-            const bookItem = findBook(book.id);
+            const bookItem = findBook(book.id, bookListLoaded);
             bookItem.isCompleted = false;
             updateLocalStorage();
-            loadContentFromStorage();
+
+            const searchInput = document.getElementById('searchInput').value;
+            loadContentFromStorage(searchInput);
         });
 
         container.append(undoButton, deleteButton);
@@ -130,10 +138,12 @@ function makeItem(book) {
         doneButton.classList.add('greenButton');
 
         doneButton.addEventListener('click', () => {
-            const bookItem = findBook(book.id);
+            const bookItem = findBook(book.id, bookListLoaded);
             bookItem.isCompleted = true;
             updateLocalStorage();
-            loadContentFromStorage();
+
+            const searchInput = document.getElementById('searchInput').value;
+            loadContentFromStorage(searchInput);
         });
 
         container.append(doneButton, deleteButton);
@@ -142,34 +152,31 @@ function makeItem(book) {
     return container;
 }
 
-function deleteItem(bookId) {
-    const customDialog = document.getElementById('custom-dialog');
-    customDialog.style.visibility = 'visible';
+function deleteItem(bookId, bookListLoaded) {
+    const item = document.getElementById(bookId);
+    item.innerHTML = 'Buku berhasil dihapus';
 
-    const confirmDelete = document.getElementById('confirm-delete');
-    confirmDelete.addEventListener('click', () => {
-        const bookIndex = findBookIndex(bookId);
+    setTimeout(() => {
+
+        const bookLoadedFind = findBook(bookId, bookListLoaded);
+        const bookIndex = findBookIndex(bookLoadedFind.id, bookList);
         bookList.splice(bookIndex, 1);
+
         updateLocalStorage();
-        loadContentFromStorage();
-        customDialog.style.visibility = 'hidden';
-    });
 
-    const cancelDelete = document.getElementById('cancel-delete');
-    cancelDelete.addEventListener('click', () => {
-        customDialog.style.visibility = 'hidden';
-    });
-
+        const searchInput = document.getElementById('searchInput').value;
+        loadContentFromStorage(searchInput);
+    }, 2000);
 }
 
-function findBookIndex(bookId) {
-    for (const index in bookList) {
-        if (bookList[index].id == bookId) return index;
+function findBookIndex(bookId, bookListLoaded) {
+    for (const index in bookListLoaded) {
+        if (bookListLoaded[index].id == bookId) return index;
     }
 }
 
-function findBook(bookId) {
-    for (const book of bookList) {
+function findBook(bookId, bookListLoaded) {
+    for (const book of bookListLoaded) {
         if (book.id == bookId) return book;
     }
 }
