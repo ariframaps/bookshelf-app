@@ -16,7 +16,7 @@
         <div id="addBook-container">
             <img src="assets/logo.png" id="logo-besar">
             <form id="addBook-form">
-                <h2>Masukkan Buku Baru</h2>
+                <h2 id="action-status">Masukkan Buku Baru</h2>
 
                 <label for="titleInput">Judul</label>
                 <input type="text" id="titleInput" placeholder="Judul buku" required>
@@ -27,9 +27,12 @@
                 <label for="yearInput">Tahun</label>
                 <input type="number" id="yearInput" placeholder="Tahun rilis" required>
 
-                <label for="isCompleteCheck">Selesai dibaca<input type="checkbox" id="isCompleteCheck"></label>
+                <label for="isCompleteCheck" id="isCompleteLabel">Selesai dibaca<input type="checkbox"
+                        id="isCompleteCheck"></label>
 
-                <button type="submit" id="submitButton">Masukkan buku</button>
+                <button type="submit" class="submitButton " id="submitButton">Masukkan buku</button>
+                <button type="submit" class="submitButton " id="submitEdit">Simpan perubahan</button>
+
             </form>
             <div id="app-name">
                 <h1><i>Bookshelf .App</i></h1>

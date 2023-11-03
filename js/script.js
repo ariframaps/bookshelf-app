@@ -123,6 +123,9 @@ function makeItem(book, bookListLoaded) {
     const editButton = document.createElement('button');
     editButton.innerText = 'Edit';
     editButton.classList.add('editButton');
+    editButton.addEventListener('click', () => {
+        editBook(book.id, bookListLoaded);
+    });
 
     if (book.isCompleted) {
         const undoButton = document.createElement('button');
@@ -174,6 +177,56 @@ function deleteItem(bookId, bookListLoaded) {
         const searchInput = document.getElementById('searchInput').value;
         loadContentFromStorage(searchInput);
     }, 2000);
+}
+
+function editBook(bookId, bookListLoaded) {
+    const addBook_form = document.getElementById("addBook-form");
+    const addBookContainer = document.getElementById('addBook-container');
+    const actionStatus = document.getElementById('action-status');
+    const titleInput = document.getElementById("titleInput");
+    const authorInput = document.getElementById("authorInput");
+    const yearInput = document.getElementById("yearInput");
+    const isCompleted = document.getElementById('isCompleteLabel');
+    const submitButton = document.getElementById("submitButton");
+    const submitEdit = document.getElementById("submitEdit");
+
+    const bookFind = findBook(bookId, bookListLoaded);
+    const bookEdited = findBook(bookFind.id, bookList);
+
+    const addBookContainerTemp = addBookContainer.style.backgroundColor;
+    const actionStatusTemp = actionStatus.innerText;
+
+    addBookContainer.style.backgroundColor = "#b43111";
+    actionStatus.innerText = "Edit Buku";
+    titleInput.value = bookEdited.title;
+    authorInput.value = bookEdited.author;
+    yearInput.value = bookEdited.year;
+    isCompleted.style.visibility = "hidden";
+    submitEdit.style.visibility = "visible";
+    submitButton.style.visibility = "hidden";
+    submitButton.disabled = true;
+
+    submitEdit.addEventListener("click", () => {
+        bookEdited.title = titleInput.value;
+        bookEdited.author = authorInput.value;
+        bookEdited.year = yearInput.value;
+
+        addBookContainer.style.backgroundColor = addBookContainerTemp;
+        actionStatus.innerText = actionStatusTemp;
+        titleInput.value = '';
+        authorInput.value = '';
+        yearInput.value = '';
+        isCompleted.style.visibility = "visible";
+        submitEdit.style.visibility = "hidden";
+        submitButton.style.visibility = "visible";
+        submitButton.disabled = false;
+
+        updateLocalStorage();
+
+        const searchInput = document.getElementById('searchInput').value;
+        loadContentFromStorage(searchInput);
+    });
+
 }
 
 function findBookIndex(bookId, bookListLoaded) {

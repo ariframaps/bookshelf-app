@@ -71,7 +71,8 @@ body {
     margin-left: 10px;
 }
 
-#addBook-form #submitButton {
+#addBook-form #submitButton,
+.submitButton {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     height: 35px;
     font-size: 16px;
@@ -80,6 +81,12 @@ body {
     background-color: #1849A3;
     border-radius: 5px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .25);
+}
+
+#submitEdit {
+    visibility: hidden;
+    position: relative;
+    top: -45px;
 }
 
 #addBook-form #submitButton:hover {
