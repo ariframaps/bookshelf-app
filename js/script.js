@@ -141,7 +141,7 @@ function makeItem(book, bookListLoaded) {
             loadContentFromStorage(searchInput);
         });
 
-        container.append(undoButton, deleteButton);
+        container.append(undoButton, deleteButton, editButton);
     } else {
         const doneButton = document.createElement('button');
         doneButton.innerText = 'Selesai dibaca';
@@ -167,7 +167,6 @@ function deleteItem(bookId, bookListLoaded) {
     item.innerHTML = 'Buku berhasil dihapus';
 
     setTimeout(() => {
-
         const bookLoadedFind = findBook(bookId, bookListLoaded);
         const bookIndex = findBookIndex(bookLoadedFind.id, bookList);
         bookList.splice(bookIndex, 1);
@@ -180,53 +179,77 @@ function deleteItem(bookId, bookListLoaded) {
 }
 
 function editBook(bookId, bookListLoaded) {
-    const addBook_form = document.getElementById("addBook-form");
-    const addBookContainer = document.getElementById('addBook-container');
-    const actionStatus = document.getElementById('action-status');
-    const titleInput = document.getElementById("titleInput");
-    const authorInput = document.getElementById("authorInput");
-    const yearInput = document.getElementById("yearInput");
-    const isCompleted = document.getElementById('isCompleteLabel');
-    const submitButton = document.getElementById("submitButton");
-    const submitEdit = document.getElementById("submitEdit");
-
     const bookFind = findBook(bookId, bookListLoaded);
     const bookEdited = findBook(bookFind.id, bookList);
 
-    const addBookContainerTemp = addBookContainer.style.backgroundColor;
-    const actionStatusTemp = actionStatus.innerText;
+    const title = prompt("Judul buku");
+    const author = prompt("Penulis buku");
+    const tahun = prompt("Tahun rilis");
 
-    addBookContainer.style.backgroundColor = "#b43111";
-    actionStatus.innerText = "Edit Buku";
-    titleInput.value = bookEdited.title;
-    authorInput.value = bookEdited.author;
-    yearInput.value = bookEdited.year;
-    isCompleted.style.visibility = "hidden";
-    submitEdit.style.visibility = "visible";
-    submitButton.style.visibility = "hidden";
-    submitButton.disabled = true;
-
-    submitEdit.addEventListener("click", () => {
-        bookEdited.title = titleInput.value;
-        bookEdited.author = authorInput.value;
-        bookEdited.year = yearInput.value;
-
-        addBookContainer.style.backgroundColor = addBookContainerTemp;
-        actionStatus.innerText = actionStatusTemp;
-        titleInput.value = '';
-        authorInput.value = '';
-        yearInput.value = '';
-        isCompleted.style.visibility = "visible";
-        submitEdit.style.visibility = "hidden";
-        submitButton.style.visibility = "visible";
-        submitButton.disabled = false;
+    if ((title == null || '') || (author == null || '') || (tahun == null || '')) {
+        alert('Gagal update buku, data tidak boleh ada yang kosong');
+    } else {
+        bookEdited.title = title;
+        bookEdited.author = author;
+        bookEdited.tahun = tahun;
 
         updateLocalStorage();
-
         const searchInput = document.getElementById('searchInput').value;
         loadContentFromStorage(searchInput);
-    });
+    }
 
+
+    // const item = document.getElementById(bookId);
+    // const addBookContainer = document.getElementById('addBook-container');
+    // const actionStatus = document.getElementById('action-status');
+    // const titleInput = document.getElementById("titleInput");
+    // const authorInput = document.getElementById("authorInput");
+    // const yearInput = document.getElementById("yearInput");
+    // const isCompleted = document.getElementById('isCompleteLabel');
+    // const submitButton = document.getElementById("submitButton");
+    // const submitEdit = document.getElementById("submitEdit");
+
+    // const bookFind = findBook(bookId, bookListLoaded);
+    // const bookEdited = findBook(bookFind.id, bookList);
+
+    // const addBookContainerTemp = addBookContainer.style.backgroundColor;
+    // const actionStatusTemp = actionStatus.innerText;
+    // const itemTemp = item.style.backgroundColor;
+
+    // addBookContainer.style.backgroundColor = "#b43111";
+    // item.style.backgroundColor = "#f8e7dc";
+    // actionStatus.innerText = "Edit Buku";
+    // titleInput.value = bookEdited.title;
+    // authorInput.value = bookEdited.author;
+    // yearInput.value = bookEdited.year;
+    // isCompleted.style.visibility = "hidden";
+    // submitEdit.style.visibility = "visible";
+    // submitButton.style.visibility = "hidden";
+    // submitButton.disabled = true;
+
+    // submitEdit.addEventListener("click", () => {
+    //     console.log(bookEdited);
+
+    // bookEdited.title = titleInput.value;
+    // bookEdited.author = authorInput.value;
+    // bookEdited.year = yearInput.value;
+
+    // addBookContainer.style.backgroundColor = addBookContainerTemp;
+    // item.style.backgroundColor = itemTemp;
+    // actionStatus.innerText = actionStatusTemp;
+    // titleInput.value = '';
+    // authorInput.value = '';
+    // yearInput.value = '';
+    // isCompleted.style.visibility = "visible";
+    // submitEdit.style.visibility = "hidden";
+    // submitButton.style.visibility = "visible";
+    // submitButton.disabled = false;
+
+    // updateLocalStorage();
+
+    // const searchInput = document.getElementById('searchInput').value;
+    // loadContentFromStorage(searchInput);
+    // });
 }
 
 function findBookIndex(bookId, bookListLoaded) {
@@ -240,3 +263,8 @@ function findBook(bookId, bookListLoaded) {
         if (book.id == bookId) return book;
     }
 }
+
+const submitEdit = document.getElementById("submitEdit");
+submitEdit.addEventListener("click", () => {
+    localStorage.removeItem(STORAGE_KEY);
+});
