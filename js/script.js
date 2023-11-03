@@ -2,10 +2,12 @@ let bookList = [];
 const STORAGE_KEY = 'bookshelf-storage';
 
 document.addEventListener("DOMContentLoaded", () => {
+    // cek apakah terdapat web storage di browser user
     if (isStorageExist()) {
         loadContentFromStorage();
     }
 
+    // menghilangkan placeholder saat fokus ke input dan mengembalikannya saat blur
     const inputs = document.querySelectorAll('input[type="text"]');
     for (let input of inputs) {
         const placeholder = input.placeholder;
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // menambahkan buku saat form masukkan buku baru di submit
     const addBook_form = document.getElementById("addBook-form");
     addBook_form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -25,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadContentFromStorage(searchInput);
     });
 
+    // menampilkan buku sesuai dengan pencarian user saat submit kolom pencarian
     const search_form = document.getElementById("search-container");
     search_form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -33,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// fungsi merubah localStorage untuk dimasukkan ke array bookList dan merender buku di tampilan
 function loadContentFromStorage(searchInput = '') {
     const belumDibaca = document.getElementById('belumDibaca');
     belumDibaca.innerHTML = '';
@@ -55,6 +60,7 @@ function loadContentFromStorage(searchInput = '') {
     }
 }
 
+// fungsi menambahkan buku baru
 function addBook() {
     const id = generateId();
     const titleInput = document.getElementById("titleInput").value;
@@ -77,6 +83,7 @@ function addBook() {
     document.getElementById("isCompleteCheck").checked = false;
 }
 
+// fungsi membuat elemen untuk buku baru agar bisa ditampilkan di rak buku
 function makeItem(book, bookListLoaded) {
     const judul = document.createElement('h3');
     judul.innerText = book.title;
@@ -144,6 +151,7 @@ function makeItem(book, bookListLoaded) {
     return container;
 }
 
+// fungsi menghapus item buku
 function deleteItem(bookId, bookListLoaded) {
     const item = document.getElementById(bookId);
     item.innerHTML = 'Buku berhasil dihapus';
@@ -160,6 +168,7 @@ function deleteItem(bookId, bookListLoaded) {
     }, 2000);
 }
 
+// fungsi mengedit buku
 function editBook(bookId, bookListLoaded) {
     const bookFind = findBook(bookId, bookListLoaded);
     const bookEdited = findBook(bookFind.id, bookList);
@@ -181,31 +190,37 @@ function editBook(bookId, bookListLoaded) {
     }
 }
 
+// fungsi mencari buku dan mengembalikan index
 function findBookIndex(bookId, bookListLoaded) {
     for (const index in bookListLoaded) {
         if (bookListLoaded[index].id == bookId) return index;
     }
 }
 
+// fungsi mencari buku dan mengembalikan objek buku
 function findBook(bookId, bookListLoaded) {
     for (const book of bookListLoaded) {
         if (book.id == bookId) return book;
     }
 }
 
+// fungsi membuat id unik
 function generateId() {
     return +new Date();
 }
 
+// fungsi mengecek web storage apakah ada di browser
 function isStorageExist() {
     return typeof (Storage) !== undefined;
 }
 
+// fungsi update localStorage dengan cara membuat stringify dari array bookList dan set item localStorage
 function updateLocalStorage() {
     const bookListStringified = JSON.stringify(bookList);
     localStorage.setItem(STORAGE_KEY, bookListStringified);
 }
 
+// fungsi menambahkan buku baru di array bookList dan update ke localStorage
 function addContentToStorage(newBook) {
     bookList.push(newBook);
     updateLocalStorage();
