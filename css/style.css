@@ -181,7 +181,8 @@ main {
 }
 
 .greenButton,
-.redButton {
+.redButton,
+.editButton {
     color: white;
     border: none;
     font-size: 14px;
@@ -206,4 +207,9 @@ button {
 
 .item .redButton {
     background-color: #C52986;
+    margin-right: 10px;
+}
+
+.item .editButton {
+    background-color: gray;
 }

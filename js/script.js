@@ -114,8 +114,15 @@ function makeItem(book, bookListLoaded) {
     deleteButton.innerText = 'Hapus';
     deleteButton.classList.add('redButton');
     deleteButton.addEventListener('click', () => {
-        deleteItem(book.id, bookListLoaded);
+        const isSure = confirm('Anda yakin ingin menghapus buku?');
+        if (isSure) {
+            deleteItem(book.id, bookListLoaded);
+        }
     });
+
+    const editButton = document.createElement('button');
+    editButton.innerText = 'Edit';
+    editButton.classList.add('editButton');
 
     if (book.isCompleted) {
         const undoButton = document.createElement('button');
@@ -146,7 +153,7 @@ function makeItem(book, bookListLoaded) {
             loadContentFromStorage(searchInput);
         });
 
-        container.append(doneButton, deleteButton);
+        container.append(doneButton, deleteButton, editButton);
     }
 
     return container;
