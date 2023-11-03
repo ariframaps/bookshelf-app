@@ -33,46 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function addBook() {
-    const id = generateId();
-    const titleInput = document.getElementById("titleInput").value;
-    const authorInput = document.getElementById("authorInput").value;
-    const yearInput = document.getElementById("yearInput").value;
-    const isCompleted = document.getElementById('isCompleteCheck').checked;
-
-    const newBook = {
-        id: id,
-        title: titleInput,
-        author: authorInput,
-        year: yearInput,
-        isCompleted: isCompleted
-    }
-
-    addContentToStorage(newBook);
-    document.getElementById("titleInput").value = '';
-    document.getElementById("authorInput").value = '';
-    document.getElementById("yearInput").value = '';
-    document.getElementById("isCompleteCheck").checked = false;
-}
-
-function generateId() {
-    return +new Date();
-}
-
-function isStorageExist() {
-    return typeof (Storage) !== undefined;
-}
-
-function updateLocalStorage() {
-    const bookListStringified = JSON.stringify(bookList);
-    localStorage.setItem(STORAGE_KEY, bookListStringified);
-}
-
-function addContentToStorage(newBook) {
-    bookList.push(newBook);
-    updateLocalStorage();
-}
-
 function loadContentFromStorage(searchInput = '') {
     const belumDibaca = document.getElementById('belumDibaca');
     belumDibaca.innerHTML = '';
@@ -93,6 +53,28 @@ function loadContentFromStorage(searchInput = '') {
             belumDibaca.appendChild(item);
         }
     }
+}
+
+function addBook() {
+    const id = generateId();
+    const titleInput = document.getElementById("titleInput").value;
+    const authorInput = document.getElementById("authorInput").value;
+    const yearInput = document.getElementById("yearInput").value;
+    const isCompleted = document.getElementById('isCompleteCheck').checked;
+
+    const newBook = {
+        id: id,
+        title: titleInput,
+        author: authorInput,
+        year: yearInput,
+        isCompleted: isCompleted
+    }
+
+    addContentToStorage(newBook);
+    document.getElementById("titleInput").value = '';
+    document.getElementById("authorInput").value = '';
+    document.getElementById("yearInput").value = '';
+    document.getElementById("isCompleteCheck").checked = false;
 }
 
 function makeItem(book, bookListLoaded) {
@@ -197,59 +179,6 @@ function editBook(bookId, bookListLoaded) {
         const searchInput = document.getElementById('searchInput').value;
         loadContentFromStorage(searchInput);
     }
-
-
-    // const item = document.getElementById(bookId);
-    // const addBookContainer = document.getElementById('addBook-container');
-    // const actionStatus = document.getElementById('action-status');
-    // const titleInput = document.getElementById("titleInput");
-    // const authorInput = document.getElementById("authorInput");
-    // const yearInput = document.getElementById("yearInput");
-    // const isCompleted = document.getElementById('isCompleteLabel');
-    // const submitButton = document.getElementById("submitButton");
-    // const submitEdit = document.getElementById("submitEdit");
-
-    // const bookFind = findBook(bookId, bookListLoaded);
-    // const bookEdited = findBook(bookFind.id, bookList);
-
-    // const addBookContainerTemp = addBookContainer.style.backgroundColor;
-    // const actionStatusTemp = actionStatus.innerText;
-    // const itemTemp = item.style.backgroundColor;
-
-    // addBookContainer.style.backgroundColor = "#b43111";
-    // item.style.backgroundColor = "#f8e7dc";
-    // actionStatus.innerText = "Edit Buku";
-    // titleInput.value = bookEdited.title;
-    // authorInput.value = bookEdited.author;
-    // yearInput.value = bookEdited.year;
-    // isCompleted.style.visibility = "hidden";
-    // submitEdit.style.visibility = "visible";
-    // submitButton.style.visibility = "hidden";
-    // submitButton.disabled = true;
-
-    // submitEdit.addEventListener("click", () => {
-    //     console.log(bookEdited);
-
-    // bookEdited.title = titleInput.value;
-    // bookEdited.author = authorInput.value;
-    // bookEdited.year = yearInput.value;
-
-    // addBookContainer.style.backgroundColor = addBookContainerTemp;
-    // item.style.backgroundColor = itemTemp;
-    // actionStatus.innerText = actionStatusTemp;
-    // titleInput.value = '';
-    // authorInput.value = '';
-    // yearInput.value = '';
-    // isCompleted.style.visibility = "visible";
-    // submitEdit.style.visibility = "hidden";
-    // submitButton.style.visibility = "visible";
-    // submitButton.disabled = false;
-
-    // updateLocalStorage();
-
-    // const searchInput = document.getElementById('searchInput').value;
-    // loadContentFromStorage(searchInput);
-    // });
 }
 
 function findBookIndex(bookId, bookListLoaded) {
@@ -264,7 +193,20 @@ function findBook(bookId, bookListLoaded) {
     }
 }
 
-const submitEdit = document.getElementById("submitEdit");
-submitEdit.addEventListener("click", () => {
-    localStorage.removeItem(STORAGE_KEY);
-});
+function generateId() {
+    return +new Date();
+}
+
+function isStorageExist() {
+    return typeof (Storage) !== undefined;
+}
+
+function updateLocalStorage() {
+    const bookListStringified = JSON.stringify(bookList);
+    localStorage.setItem(STORAGE_KEY, bookListStringified);
+}
+
+function addContentToStorage(newBook) {
+    bookList.push(newBook);
+    updateLocalStorage();
+}
