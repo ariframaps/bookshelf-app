@@ -72,7 +72,7 @@ function addBook() {
         id: id,
         title: titleInput,
         author: authorInput,
-        year: yearInput,
+        year: parseInt(yearInput),
         isCompleted: isCompleted
     }
 
