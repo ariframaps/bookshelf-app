@@ -19,6 +19,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // memunculkan form tambah buku saat menekan tombol tambah
+    const showFormBtn = document.querySelector('.addbtn'); //add form button
+    const aside = document.querySelector('aside'); // aside element
+    const empty = document.querySelector('#empty');
+    const addBookContainer = document.querySelector('#addBook-container');
+    showFormBtn.addEventListener("click", () => {
+        aside.style.display = 'flex';
+    });
+
+    // close add book form
+    const closeFormBtn = document.querySelector('.closeAddBook');
+    closeFormBtn.addEventListener("click", () => {
+        aside.style.display = 'none';
+    })
+
     // menambahkan buku saat form masukkan buku baru di submit
     const addBook_form = document.getElementById("addBook-form");
     addBook_form.addEventListener("submit", (e) => {
@@ -27,6 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const searchInput = document.getElementById('searchInput').value;
         loadContentFromStorage(searchInput);
     });
+
+    // if window is big
+    window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1300) {
+            aside.style.display = 'flex';
+        } else {
+            aside.style.display = 'none';
+        }
+    })
 
     // menampilkan buku sesuai dengan pencarian user saat submit kolom pencarian
     const search_form = document.getElementById("search-container");
