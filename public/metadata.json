@@ -1,0 +1,44 @@
+{
+  "title": "Bookshelf App",
+  "category": "personal",
+  "description": "A lightweight bookshelf management web application built with vanilla JavaScript that helps users organize their personal book collections and track reading progress. Users can add books, manage reading status, and maintain a structured reading list through a simple and responsive interface.",
+  "shortDesc": "Personal bookshelf manager for tracking books and reading progress.",
+  "tags": [
+    "html",
+    "css",
+    "javascript",
+    "localstorage",
+    "vanilla-js"
+  ],
+  "role": "Frontend Developer",
+  "year": "2023",
+  "confidentialNote": null,
+  "details": {
+    "overview": "Bookshelf App is a personal project created to help manage and organize my own reading collection. The application provides a simple interface for tracking books, monitoring reading progress, and separating completed books from unread ones.",
+    "problem": "Managing personal reading lists manually can become messy and difficult to organize, especially when tracking which books have already been completed. I wanted a lightweight solution that was simple, fast, and easy to use without relying on external services.",
+    "solution": "I built the application using HTML, CSS, and vanilla JavaScript with browser localStorage for persistent data storage. Users can add books, update reading status, search collections, and organize books into completed and unfinished categories through a responsive and interactive UI.",
+    "timeline": [
+      {
+        "date": "Nov 2023",
+        "label": "UI layout & application structure"
+      },
+      {
+        "date": "Nov 2023",
+        "label": "Book management & localStorage integration"
+      },
+      {
+        "date": "Nov 2023",
+        "label": "Search, filtering & responsive polish"
+      }
+    ],
+    "highlights": [
+      "Book collection management system",
+      "Track completed and unfinished books",
+      "Persistent storage using localStorage",
+      "Search and filtering functionality",
+      "Responsive UI using pure HTML/CSS",
+      "Built entirely with vanilla JavaScript"
+    ],
+    "outcome": "The project improved my understanding of DOM manipulation, browser storage, and state management fundamentals using vanilla JavaScript while also serving as a useful tool for managing my personal reading habits."
+  }
+}
